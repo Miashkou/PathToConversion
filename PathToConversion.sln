@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathToConversion", "PathToConversion\PathToConversion.csproj", "{A24694B2-8CE3-4BBF-99FF-7C67C612864A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sessions", "Sessions\Sessions.csproj", "{1C99FEF5-6328-4A53-B67D-FE7C1A988DCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transactions", "..\transactions\transactions\transactions.csproj", "{0DCD866A-8E98-4F96-B435-528B16F192CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1C99FEF5-6328-4A53-B67D-FE7C1A988DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C99FEF5-6328-4A53-B67D-FE7C1A988DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C99FEF5-6328-4A53-B67D-FE7C1A988DCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DCD866A-8E98-4F96-B435-528B16F192CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DCD866A-8E98-4F96-B435-528B16F192CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DCD866A-8E98-4F96-B435-528B16F192CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DCD866A-8E98-4F96-B435-528B16F192CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
