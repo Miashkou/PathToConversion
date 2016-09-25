@@ -2,9 +2,7 @@ c:\users\vykis\documents\visual studio 2015\PathToConversion\PathToConversion\Pa
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe.config
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\PathToConversion.pdb
-C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\Colorful.Console.dll
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\Colorful.Console.xml
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.csprojResolveAssemblyReference.cache
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.exe
@@ -28,3 +26,4 @@ C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json
 C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\Colorful.Console.xml
 C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.xml
 C:\Users\EDG\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.csprojResolveAssemblyReference.cache
+C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\ConsoleTables.Core.dll

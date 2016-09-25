@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Colorful;
-using Microsoft.Win32;
+using ConsoleTables.Core;
+using static System.ConsoleColor;
 using static System.String;
+
 
 namespace PathToConversion
 {
@@ -23,6 +24,9 @@ namespace PathToConversion
 
         public static void CreateTransactionPath(int successCookie, List<Transactions> transactionList)
         {
+
+            var printTransactions = new ConsoleTable("Logtime", "TransactionType", "Campaign", "Media", "Banner", "ID_LogPoints", "URLfrom");
+
             var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
             foreach (var transactions in orderedTransactions)
             {
@@ -30,19 +34,25 @@ namespace PathToConversion
                 Transactions attribute = null;
                 foreach (var transactionInAtribution in Attribution.GetAtribution(transactionList))
                 {
-                     attribute = !IsNullOrEmpty(transactions.Campaign) ? transactions : transactionInAtribution;
+                    attribute = !IsNullOrEmpty(transactions.Campaign) ? transactions : transactionInAtribution;
                 }
-                Console.WriteLine(
-                    attribute != null
-                        ? $"{transactions.LogTime,-19}|{transactions.TransactionType,-9}|{attribute.Campaign,-16}|{attribute.Media,-10}|{attribute.Banner,-17}|{transactions.ID_LogPoints,-12}|{transactions.URLfrom,-20}"
-                        : $"{transactions.LogTime,-19}|{transactions.TransactionType,-9}|{"Empty value",-16}|{"Empty value",-10}|{"Empty value",-17}|{transactions.ID_LogPoints,-12}|{transactions.URLfrom,-20}",
-                    Color.White);
+                if (attribute != null)
+                    printTransactions.AddRow(transactions.LogTime, transactions.TransactionType, attribute.Campaign,
+                        attribute.Media, attribute.Banner, transactions.ID_LogPoints, transactions.URLfrom);
+                else
+                    printTransactions.AddRow(transactions.LogTime, transactions.TransactionType, "null", "null", "null", transactions.ID_LogPoints, transactions.URLfrom);
+
                 if (!TransactionValues.ClientThankYouLogPoint.Contains(transactions.ID_LogPoints)) continue;
+                Console.ForegroundColor = Green;
+                Console.WriteLine("*******************************************************************************************************************************************************");
                 Console.WriteLine("Edvardo metodai");
-                PathPrinter(successCookie,orderedTransactions);
+                
+                PathPrinter(successCookie, orderedTransactions);
                 break;
             }
-            Console.WriteLine();
+            Console.ForegroundColor = White;
+            printTransactions.Write();
+            
         }
         public static void PathPrinter(int cookieId, List<Transactions> transactionList)
         {
@@ -51,6 +61,7 @@ namespace PathToConversion
             //Console.WriteLine($"[Lead | {GetAdInteraction(transactionList)} | {GetReferrers(transactionList)}]", Color.CornflowerBlue);
             //Console.WriteLine();
         }
+
     }
 
     public class TransactionValues
