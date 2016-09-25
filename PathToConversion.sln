@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathToConversion", "PathToC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sessions", "Sessions\Sessions.csproj", "{1C99FEF5-6328-4A53-B67D-FE7C1A988DCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transactions", "..\transactions\transactions\transactions.csproj", "{0DCD866A-8E98-4F96-B435-528B16F192CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transactions", "transactions\transactions.csproj", "{0DCD866A-8E98-4F96-B435-528B16F192CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
