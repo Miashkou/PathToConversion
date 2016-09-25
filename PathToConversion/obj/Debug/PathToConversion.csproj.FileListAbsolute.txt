@@ -18,3 +18,6 @@ C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\obj\Debug\Path
 C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe.config
 C:\Users\EDG\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.exe
 C:\Users\EDG\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.pdb
+C:\Users\Edvard\Desktop\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe.config
+C:\Users\Edvard\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.exe
+C:\Users\Edvard\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.pdb
