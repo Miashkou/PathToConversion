@@ -27,3 +27,12 @@ C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\Colorful.Consol
 C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.xml
 C:\Users\EDG\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.csprojResolveAssemblyReference.cache
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\ConsoleTables.Core.dll
+D:\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe.config
+D:\PathToConversion\PathToConversion\obj\Debug\PathToConversion.exe
+D:\PathToConversion\PathToConversion\obj\Debug\PathToConversion.pdb
+D:\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe
+D:\PathToConversion\PathToConversion\bin\Debug\PathToConversion.pdb
+D:\PathToConversion\PathToConversion\bin\Debug\ConsoleTables.Core.dll
+D:\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.dll
+D:\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.xml
+D:\PathToConversion\PathToConversion\obj\Debug\PathToConversion.csprojResolveAssemblyReference.cache

@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PathToConversion
 {
     internal class Attribution
     {
+        private static DateTime _today = DateTime.Today;
+        private static readonly DateTime SevenDaysEarlier = _today.AddDays(-7);
+        private static readonly DateTime TwentyEightDaysEarlier = _today.AddDays(-28);
         public static List<Transactions> GetAtribution(List<Transactions> listWithTransaction)
         {
             var orderedTransactions = listWithTransaction.OrderByDescending(r => r.LogTime).ToList();
@@ -13,12 +17,16 @@ namespace PathToConversion
             {
                 if (transaction.TransactionType.Equals(TransactionValues.Click))
                 {
-                    var transactionClick = new List<Transactions> { transaction };
-                    return transactionClick;
+                    if (transaction.LogTime > TwentyEightDaysEarlier)
+                    {
+                        var transactionClick = new List<Transactions> {transaction};
+                        return transactionClick;
+                    }
                 }
                 else if ((transaction.TransactionType.Equals(TransactionValues.Impression)))
                 {
-                    transactionList.Add(transaction);
+                    if (transaction.LogTime > SevenDaysEarlier)
+                        transactionList.Add(transaction);
                 }
             }
             return transactionList;
