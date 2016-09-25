@@ -50,7 +50,6 @@
     <Compile Include="TransactionTypes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="transactions.cs" />
     <Compile Include="Atribution.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +60,12 @@
     <None Include="transactions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PathToConversion\PathToConversion.csproj">
+      <Project>{a24694b2-8ce3-4bbf-99ff-7c67c612864a}</Project>
+      <Name>PathToConversion</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

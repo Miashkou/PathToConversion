@@ -21,3 +21,10 @@ C:\Users\EDG\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversio
 C:\Users\Edvard\Desktop\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe.config
 C:\Users\Edvard\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.exe
 C:\Users\Edvard\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.pdb
+C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe
+C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\PathToConversion.pdb
+C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\Colorful.Console.dll
+C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.dll
+C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\Colorful.Console.xml
+C:\Users\EDG\Desktop\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.xml
+C:\Users\EDG\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.csprojResolveAssemblyReference.cache

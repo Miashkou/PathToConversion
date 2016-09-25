@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using Colorful;
+
 using static System.String;
 
 namespace PathToConversion
@@ -31,6 +32,7 @@ namespace PathToConversion
                 var logTime = !IsNullOrEmpty(tracked.LogTime) ? tracked.LogTime : "null";
                 var transactionType = !IsNullOrEmpty(tracked.TransactionType) ? tracked.TransactionType : "null";
                 //TODO Eivino metodai to get filled transactions
+                Atribution.ConversionMethod(cookieId, orderedTransactions);
                 //var campaign = !IsNullOrEmpty(tracked.Campaign) ? tracked.Campaign : Method.GetLastCampaign(reversedTransactions);
                 //var media = !IsNullOrEmpty(tracked.Media) ? tracked.Media : Method.GetLastMedia(reversedTransactions);
                 //var banner = !IsNullOrEmpty(tracked.Banner) ? tracked.Banner : Method.GetLastBanner(reversedTransactions);
