@@ -2,12 +2,12 @@
 using System.Drawing;
 using System.Linq;
 using Colorful;
-
+using Microsoft.Win32;
 using static System.String;
 
 namespace PathToConversion
 {
-    internal class Filter
+    public static class Filter
     {
         public static void GetSuccessfulTransaction(List<Transactions> transactionList)
         {
@@ -21,37 +21,45 @@ namespace PathToConversion
             }
         }
 
-        public static void CreateTransactionPath(string successCid, List<Transactions> transactionList)
+        public static void CreateTransactionPath(int successCookie, List<Transactions> transactionList)
         {
-            var cookieId = successCid;
             var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
-            var reversedTransactions = transactionList.OrderByDescending(r => r.LogTime).ToList();
-            foreach (var tracked in orderedTransactions)
+            foreach (var transactions in orderedTransactions)
             {
-                if (!cookieId.Equals(tracked.CookieId)) continue;
-                var logTime = !IsNullOrEmpty(tracked.LogTime) ? tracked.LogTime : "null";
-                var transactionType = !IsNullOrEmpty(tracked.TransactionType) ? tracked.TransactionType : "null";
-                //TODO Eivino metodai to get filled transactions
-                Atribution.ConversionMethod(cookieId, orderedTransactions);
-                //var campaign = !IsNullOrEmpty(tracked.Campaign) ? tracked.Campaign : Method.GetLastCampaign(reversedTransactions);
-                //var media = !IsNullOrEmpty(tracked.Media) ? tracked.Media : Method.GetLastMedia(reversedTransactions);
-                //var banner = !IsNullOrEmpty(tracked.Banner) ? tracked.Banner : Method.GetLastBanner(reversedTransactions);
-                var idLogPoints = !IsNullOrEmpty(tracked.ID_LogPoints) ? tracked.ID_LogPoints : "null";
-                // Console.WriteLine($"{logTime.PadRight(19)}|{transactionType.PadRight(9)}|{campaign.PadRight(16)}|{media.PadRight(10)}|{banner.PadRight(17)}|{idLogPoints.PadRight(5)}|", Color.White);
-                if (!TransactionValues.ClientThankYouLogPoint.Contains(idLogPoints)) continue;
-                //TODO Edvardo metodai spausdinti referrerius ir kt.
+                if (!successCookie.Equals(transactions.CookieId)) continue;
+                Transactions attribute = null;
+                foreach (var transactionInAtribution in Attribution.GetAtribution(transactionList))
+                {
+                     attribute = !IsNullOrEmpty(transactions.Campaign) ? transactions : transactionInAtribution;
+                }
+                Console.WriteLine(
+                    attribute != null
+                        ? $"{transactions.LogTime,-19}|{transactions.TransactionType,-9}|{attribute.Campaign,-16}|{attribute.Media,-10}|{attribute.Banner,-17}|{transactions.ID_LogPoints,-12}|{transactions.URLfrom,-20}"
+                        : $"{transactions.LogTime,-19}|{transactions.TransactionType,-9}|{"Empty value",-16}|{"Empty value",-10}|{"Empty value",-17}|{transactions.ID_LogPoints,-12}|{transactions.URLfrom,-20}",
+                    Color.White);
+                if (!TransactionValues.ClientThankYouLogPoint.Contains(transactions.ID_LogPoints)) continue;
+                Console.WriteLine("Edvardo metodai");
+                PathPrinter(successCookie,orderedTransactions);
                 break;
             }
+            Console.WriteLine();
+        }
+        public static void PathPrinter(int cookieId, List<Transactions> transactionList)
+        {
+            //Console.WriteLine($"Completed conversion from cookieUser {cookieId}.", Color.SpringGreen);
+            //Program.Main()
+            //Console.WriteLine($"[Lead | {GetAdInteraction(transactionList)} | {GetReferrers(transactionList)}]", Color.CornflowerBlue);
+            //Console.WriteLine();
         }
     }
 
     public class TransactionValues
     {
-        public static string Impression { get; } = "1";
-        public static string Click { get; } = "2";
-        public static string Event { get; } = "21";
-        public static string Unload { get; } = "4";
-        public static string TrackingPoint { get; } = "100";
+        public static int Impression { get; } = 1;
+        public static int Click { get; } = 2;
+        public static int Event { get; } = 21;
+        public static int Unload { get; } = 4;
+        public static int TrackingPoint { get; } = 100;
 
         public static List<string> ClientThankYouLogPoint = new List<string>
         {
