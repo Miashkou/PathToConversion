@@ -9,3 +9,6 @@ C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Js
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.csprojResolveAssemblyReference.cache
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.exe
 C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConversion.pdb
+C:\Users\Edvard\OneDrive\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe.config
+C:\Users\Edvard\OneDrive\PathToConversion\PathToConversion\obj\Debug\PathToConversion.exe
+C:\Users\Edvard\OneDrive\PathToConversion\PathToConversion\obj\Debug\PathToConversion.pdb
