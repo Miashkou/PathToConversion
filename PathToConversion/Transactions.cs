@@ -1,6 +1,6 @@
 ﻿namespace PathToConversion
 {
-    internal class Transactions
+    public class Transactions
     {
         public string LogTime { get; set; }
         public string TransactionType { get; set; }

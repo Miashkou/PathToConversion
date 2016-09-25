@@ -12,3 +12,6 @@ C:\Users\Vykis\Desktop\PathToConversion\PathToConversion\obj\Debug\PathToConvers
 C:\Users\Edvard\OneDrive\PathToConversion\PathToConversion\bin\Debug\PathToConversion.exe.config
 C:\Users\Edvard\OneDrive\PathToConversion\PathToConversion\obj\Debug\PathToConversion.exe
 C:\Users\Edvard\OneDrive\PathToConversion\PathToConversion\obj\Debug\PathToConversion.pdb
+C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\bin\Debug\PathToConversion.exe.config
+C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\obj\Debug\PathToConversion.exe
+C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\obj\Debug\PathToConversion.pdb
