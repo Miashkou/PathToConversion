@@ -56,10 +56,10 @@ namespace PathToConversion
         }
         public static void PathPrinter(int cookieId, List<Transactions> transactionList)
         {
-            //Console.WriteLine($"Completed conversion from cookieUser {cookieId}.", Color.SpringGreen);
-            //Program.Main()
-            //Console.WriteLine($"[Lead | {GetAdInteraction(transactionList)} | {GetReferrers(transactionList)}]", Color.CornflowerBlue);
-            //Console.WriteLine();
+            Console.WriteLine($"Completed conversion from cookieUser {cookieId}.");
+            
+            Console.WriteLine($"[Lead | {Sessions.GetAdInteractionStr(Attribution.GetAtribution(transactionList).FirstOrDefault())} | {Sessions.GetPathReferrer(transactionList)}]");
+            Console.WriteLine();
         }
 
     }

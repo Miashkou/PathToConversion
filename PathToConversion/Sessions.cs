@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PathToConversion;
 
-namespace Sessions
+namespace PathToConversion
 {
-    public static class Program
+    class Sessions
     {
         public static List<string> SearchEngines = new List<string> {
             "google",
@@ -22,8 +21,14 @@ namespace Sessions
 
         public static readonly TimeSpan RecentAdInteractionSpan = TimeSpan.FromSeconds(30);
 
-        static string GetPathReferrer(List<Transactions> path)
+        public static string GetPathReferrer(List<Transactions> path)
         {
+            if (
+                path.Any(
+                    a =>
+                        a.TransactionType == TransactionValues.Impression ||
+                        a.TransactionType == TransactionValues.Click))
+                return "Campaign";
             return GetReferrerType(GetFirsLogPoint(path));
         }
 
@@ -43,17 +48,18 @@ namespace Sessions
             if (url == null) return "Direct link";
             if (SearchEngines.Any(s => url.Contains(s))) return "Natural search";
             if (SocialMediaSites.Any(s => url.Contains(s))) return "Social media";
-             return "Referring site";
+            return "Referring site";
         }
 
-        static bool GetRecentAdInteraction(List<Transactions> path)
+        public static bool GetRecentAdInteraction(List<Transactions> path)
         {
             var logPointTime = GetFirsLogPoint(path).LogTime;
             return path.Any(a => logPointTime - a.LogTime < RecentAdInteractionSpan);
         }
 
-        static string GetAdInteractionStr(Transactions attributedToTrans)
+        public static string GetAdInteractionStr(Transactions attributedToTrans)
         {
+            if (attributedToTrans == null) return "Non-Campaign";
             switch (attributedToTrans.TransactionType)
             {
                 case 1:
