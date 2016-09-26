@@ -36,3 +36,12 @@ D:\PathToConversion\PathToConversion\bin\Debug\ConsoleTables.Core.dll
 D:\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.dll
 D:\PathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.xml
 D:\PathToConversion\PathToConversion\obj\Debug\PathToConversion.csprojResolveAssemblyReference.cache
+C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debug\PathToConversion.exe.config
+C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\obj\Debug\PathToConversion.exe
+C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\obj\Debug\PathToConversion.pdb
+C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\obj\Debug\PathToConversion.csprojResolveAssemblyReference.cache
+C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debug\PathToConversion.exe
+C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debug\PathToConversion.pdb
+C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debug\ConsoleTables.Core.dll
+C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debug\Newtonsoft.Json.dll
+C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debug\Newtonsoft.Json.xml

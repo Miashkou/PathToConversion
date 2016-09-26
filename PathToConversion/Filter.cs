@@ -31,11 +31,9 @@ namespace PathToConversion
             foreach (var transactions in orderedTransactions)
             {
                 if (!successCookie.Equals(transactions.CookieId)) continue;
-                Transactions attribute = null;
-                foreach (var transactionInAtribution in Attribution.GetAtribution(transactionList))
-                {
-                    attribute = !IsNullOrEmpty(transactions.Campaign) ? transactions : transactionInAtribution;
-                }
+
+                var attribute = !IsNullOrEmpty(transactions.Campaign) ? transactions : Attribution.GetAtribution(transactionList);
+
                 if (attribute != null)
                     printTransactions.AddRow(transactions.LogTime, transactions.TransactionType, attribute.Campaign,
                         attribute.Media, attribute.Banner, transactions.ID_LogPoints, transactions.URLfrom);
@@ -44,8 +42,7 @@ namespace PathToConversion
 
                 if (!TransactionValues.ClientThankYouLogPoint.Contains(transactions.ID_LogPoints)) continue;
                 Console.ForegroundColor = Green;
-                Console.WriteLine("*******************************************************************************************************************************************************");
-                Console.WriteLine("Edvardo metodai");
+                Console.WriteLine("******************************************************************************************************************************************");
                 
                 PathPrinter(successCookie, orderedTransactions);
                 break;
@@ -58,7 +55,9 @@ namespace PathToConversion
         {
             Console.WriteLine($"Completed conversion from cookieUser {cookieId}.");
             
-            Console.WriteLine($"[Lead | {Sessions.GetAdInteractionStr(Attribution.GetAtribution(transactionList).FirstOrDefault())} | {Sessions.GetPathReferrer(transactionList)}]");
+            Console.WriteLine(Sessions.GetAggregatedPath(transactionList) + " -> " +
+                $"[Lead | {Sessions.GetAdInteractionStr(Attribution.GetAtribution(transactionList))} | {Sessions.GetPathReferrer(transactionList)}]");
+
             Console.WriteLine();
         }
 

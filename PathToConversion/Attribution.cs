@@ -6,30 +6,28 @@ namespace PathToConversion
 {
     internal class Attribution
     {
-        private static DateTime _today = DateTime.Today;
-        private static readonly DateTime SevenDaysEarlier = _today.AddDays(-7);
-        private static readonly DateTime TwentyEightDaysEarlier = _today.AddDays(-28);
-        public static List<Transactions> GetAtribution(List<Transactions> listWithTransaction)
+        public static Transactions GetAtribution(List<Transactions> listWithTransaction)
         {
-            var orderedTransactions = listWithTransaction.OrderByDescending(r => r.LogTime).ToList();
-            var transactionList = new List<Transactions>();
+        var today = Sessions.GetFirsLogPoint(listWithTransaction).LogTime;
+        var sevenDaysEarlier = today.AddDays(-7);
+        var twentyEightDaysEarlier = today.AddDays(-28);
+
+        var orderedTransactions = listWithTransaction.OrderByDescending(r => r.LogTime).ToList();
+            Transactions lastImpression = null;
             foreach (var transaction in orderedTransactions)
             {
                 if (transaction.TransactionType.Equals(TransactionValues.Click))
                 {
-                    if (transaction.LogTime > TwentyEightDaysEarlier)
-                    {
-                        var transactionClick = new List<Transactions> {transaction};
-                        return transactionClick;
-                    }
+                    if (transaction.LogTime > twentyEightDaysEarlier)
+                        return transaction;
                 }
-                else if ((transaction.TransactionType.Equals(TransactionValues.Impression)))
+                else if (lastImpression == null)
                 {
-                    if (transaction.LogTime > SevenDaysEarlier)
-                        transactionList.Add(transaction);
+                    if (transaction.TransactionType.Equals(TransactionValues.Impression) && transaction.LogTime > sevenDaysEarlier)
+                        lastImpression = transaction;
                 }
             }
-            return transactionList;
+            return lastImpression;
         }
     }
 }

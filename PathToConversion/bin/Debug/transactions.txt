@@ -15,9 +15,9 @@
 },
 {
 	"LogTime": "2016-09-14 21:16:20",
-	"TransactionType": 2,
+	"TransactionType": 1,
 	"CookieID": "254257132",
-	"CookiesEnabled": 1,
+	"CookiesEnabled": 2,
 	"Campaign": "Summer Campaign",
 	"Media": "alfa.lt",
 	"Banner": "Standard banner",

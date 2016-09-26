@@ -32,7 +32,7 @@ namespace PathToConversion
             return GetReferrerType(GetFirsLogPoint(path));
         }
 
-        private static Transactions GetFirsLogPoint(List<Transactions> path)
+        public static Transactions GetFirsLogPoint(List<Transactions> path)
         {
             foreach (var trans in path)
             {
@@ -69,6 +69,40 @@ namespace PathToConversion
                 default:
                     return "";
             }
+        }
+
+        public static string GetAggregatedPath(List<Transactions> path)
+        {
+            var fullPath = AggregateMedia(path);
+
+            return string.Join(" -> ", fullPath); // → no unicode in console ;(
+        }
+
+        private static List<string> AggregateMedia(List<Transactions> path)
+        {
+            if (path.Count == 1) return new List<string> { path[0].Media };
+
+            var result = new List<string>();
+
+            var lastMedia = path[0].Media;
+            var mediaCount = 1;
+            foreach (var trans in path.Skip(1))
+            {
+                var newMedia = trans.Media;
+                if (newMedia == lastMedia)
+                {
+                    mediaCount++;
+                    continue;
+                }
+                if (mediaCount > 1)
+                    result.Add($"[{lastMedia} x{mediaCount}]");
+                else
+                    result.Add($"[{lastMedia}]");
+                lastMedia = newMedia;
+                mediaCount = 1;
+            }
+
+            return result;
         }
     }
 }
