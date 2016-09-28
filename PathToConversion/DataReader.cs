@@ -7,8 +7,11 @@ namespace PathToConversion
 {
     internal class DataReader
     {
-        static readonly string AssemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        static readonly string Json = File.ReadAllText(AssemblyPath + "\\transactions.txt");
-       public static List<Transactions> GetTracks = JsonConvert.DeserializeObject<List<Transactions>>(Json);
+        public static List<Transaction> GetFileInformation(string fileName)
+        {
+            var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var json = File.ReadAllText(assemblyPath + "\\" + fileName + ".txt");
+            return JsonConvert.DeserializeObject<List<Transaction>>(json);
+        }
     }
 }

@@ -1,0 +1,18 @@
+c:\users\edg\documents\visual studio 2015\Projects\transactions\transactions\bin\Debug\transactions.exe.config
+c:\users\edg\documents\visual studio 2015\Projects\transactions\transactions\bin\Debug\transactions.exe
+c:\users\edg\documents\visual studio 2015\Projects\transactions\transactions\bin\Debug\transactions.pdb
+c:\users\edg\documents\visual studio 2015\Projects\transactions\transactions\bin\Debug\Newtonsoft.Json.dll
+c:\users\edg\documents\visual studio 2015\Projects\transactions\transactions\bin\Debug\Newtonsoft.Json.xml
+c:\users\edg\documents\visual studio 2015\Projects\transactions\transactions\obj\Debug\transactions.csprojResolveAssemblyReference.cache
+c:\users\edg\documents\visual studio 2015\Projects\transactions\transactions\obj\Debug\transactions.exe
+c:\users\edg\documents\visual studio 2015\Projects\transactions\transactions\obj\Debug\transactions.pdb
+C:\Users\EDG\Documents\Visual Studio 2015\Projects\transactions\transactions\bin\Debug\transactions.json
+C:\Users\EDG\Desktop\transactions\transactions\bin\Debug\transactions.exe.config
+C:\Users\EDG\Desktop\transactions\transactions\obj\Debug\transactions.exe
+C:\Users\EDG\Desktop\transactions\transactions\obj\Debug\transactions.pdb
+C:\Users\EDG\Desktop\transactions\transactions\bin\Debug\transactions.exe
+C:\Users\EDG\Desktop\transactions\transactions\bin\Debug\transactions.pdb
+C:\Users\EDG\Desktop\transactions\transactions\bin\Debug\Newtonsoft.Json.dll
+C:\Users\EDG\Desktop\transactions\transactions\bin\Debug\Newtonsoft.Json.xml
+C:\Users\EDG\Desktop\transactions\transactions\obj\Debug\transactions.csprojResolveAssemblyReference.cache
+C:\Users\EDG\Desktop\transactions\transactions\bin\Debug\transactions.json

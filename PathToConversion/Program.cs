@@ -5,9 +5,8 @@ namespace PathToConversion
     internal class Program
     {
         public static void Main()
-        {
-
-            Filter.GetSuccessfulTransaction(DataReader.GetTracks);
+        { 
+            Filter.GetSuccessfulTransaction(DataReader.GetFileInformation("transactions"));
             Console.Read();
         }
     }
