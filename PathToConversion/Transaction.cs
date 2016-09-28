@@ -2,7 +2,7 @@
 
 namespace PathToConversion
 {
-    public class Transactions
+    public class Transaction
     {
         public DateTime LogTime { get; set; }
         public int TransactionType { get; set; }
@@ -13,5 +13,10 @@ namespace PathToConversion
         public string URLfrom { get; set; }
         public string ID_LogPoints { get; set; }
         public string LogPointName { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
     }
 }

@@ -19,20 +19,22 @@ namespace PathToConversion
 
         public static readonly TimeSpan RecentAdInteractionSpan = TimeSpan.FromSeconds(30);
 
-        public static string GetPathReferrer(List<Transactions> path)
+        public static string GetPathReferrer(List<Transaction> path)
         {
-            return path.Any(
+            if (path.Any(
                 a =>
                     a.TransactionType == TransactionValues.Impression ||
-                    a.TransactionType == TransactionValues.Click) ? "Campaign" : GetReferrerType(GetFirsLogPoint(path));
+                    a.TransactionType == TransactionValues.Click)) return "Campaign";
+            return GetReferrerType(GetFirsLogPoint(path));
         }
 
-        public static Transactions GetFirsLogPoint(List<Transactions> path)
+        // Change to get last session first log point
+        public static Transaction GetFirsLogPoint(List<Transaction> path)
         {
             return path.FirstOrDefault(trans => trans.TransactionType == TransactionValues.TrackingPoint);
         }
 
-        private static string GetReferrerType(Transactions trans)
+        private static string GetReferrerType(Transaction trans)
         {
             var url = trans.URLfrom;
             if (url == null) return "Direct link";
@@ -41,13 +43,14 @@ namespace PathToConversion
             return "Referring site";
         }
 
-        public static bool GetRecentAdInteraction(List<Transactions> path)
+        public static bool GetRecentAdInteraction(List<Transaction> path)
         {
             var logPointTime = GetFirsLogPoint(path).LogTime;
             return path.Any(a => logPointTime - a.LogTime < RecentAdInteractionSpan);
         }
 
-        public static string GetAdInteractionStr(Transactions attributedToTrans)
+        // Change this to use session attribution
+        public static string GetAdInteractionStr(Transaction attributedToTrans)
         {
             if (attributedToTrans == null) return "Non-Campaign";
             switch (attributedToTrans.TransactionType)
@@ -61,13 +64,14 @@ namespace PathToConversion
             }
         }
 
-        public static string GetAggregatedPath(List<Transactions> path)
+        public static string GetAggregatedPath(List<Transaction> path)
         {
             var fullPath = AggregateMedia(path);
             return string.Join(" -> ", fullPath); // → no unicode in console ;(
         }
 
-        private static List<string> AggregateMedia(List<Transactions> path)
+        // Fix two leads paths
+        private static List<string> AggregateMedia(List<Transaction> path)
         {
             if (path.Count == 1) return new List<string> { path[0].Media };
 

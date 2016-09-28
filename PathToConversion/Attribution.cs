@@ -6,14 +6,18 @@ namespace PathToConversion
 {
     internal class Attribution
     {
-        public static Transactions GetAttribution(List<Transactions> listWithTransaction)
+        public static Transaction GetAttribution(List<Transaction> listWithTransaction, Transaction logPoint)
         {
+            // Rename variables (today -> logpointTime)
+            // Use passed transaction LogTime instead
             var today = Sessions.GetFirsLogPoint(listWithTransaction).LogTime;
             var sevenDaysEarlier = today.AddDays(-7);
             var twentyEightDaysEarlier = today.AddDays(-28);
 
             var orderedTransactions = listWithTransaction.OrderByDescending(r => r.LogTime).ToList();
-            Transactions lastImpression = null;
+            // Get index of logPoint transaction
+            Transaction lastImpression = null;
+            // Make a for loop from logPoint index to beginning
             foreach (var transaction in orderedTransactions)
             {
                 if (transaction.TransactionType.Equals(TransactionValues.Click))

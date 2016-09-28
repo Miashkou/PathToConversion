@@ -5,12 +5,11 @@ using ConsoleTables.Core;
 using static System.ConsoleColor;
 using static System.String;
 
-
 namespace PathToConversion
 {
     public static class Filter
     {
-        public static void GetSuccessfulTransaction(List<Transactions> transactionList)
+        public static void GetSuccessfulTransaction(List<Transaction> transactionList)
         {
             var idLogPointsTemp = "null";
             foreach (var transaction in transactionList)
@@ -22,16 +21,16 @@ namespace PathToConversion
             }
         }
 
-        public static void CreateTransactionPath(int successCookie, List<Transactions> transactionList)
+        public static void CreateTransactionPath(int successCookieId, List<Transaction> transactionList)
         {
             var printTransactions = new ConsoleTable("Logtime", "TransactionType", "Campaign", "Media", "Banner", "ID_LogPoints", "URLfrom");
 
             var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
             foreach (var transaction in orderedTransactions)
             {
-                if (!successCookie.Equals(transaction.CookieId)) continue;
+                if (!successCookieId.Equals(transaction.CookieId)) continue;
 
-                var attribute = transaction.TransactionType != TransactionValues.TrackingPoint ? transaction : Attribution.GetAttribution(transactionList);
+                var attribute = transaction.TransactionType != TransactionValues.TrackingPoint ? transaction : Attribution.GetAttribution(transactionList, transaction);
 
                 if (attribute != null)
                     printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign, attribute.Media, attribute.Banner, transaction.ID_LogPoints, transaction.URLfrom);
@@ -42,19 +41,19 @@ namespace PathToConversion
                 Console.ForegroundColor = Green;
                 Console.WriteLine("******************************************************************************************************************************************");
 
-                TransactionSessionPrinter(successCookie, orderedTransactions);
+                TransactionSessionPrinter(successCookieId, orderedTransactions);
                 break;
             }
             Console.ForegroundColor = Cyan;
             printTransactions.Write();
         }
 
-        public static void TransactionSessionPrinter(int cookieId, List<Transactions> transactionList)
+        public static void TransactionSessionPrinter(int cookieId, List<Transaction> transactionList)
         {
             Console.WriteLine($"Completed conversion from cookieUser {cookieId}.");
 
             Console.WriteLine(Sessions.GetAggregatedPath(transactionList) + " -> " +
-                $"[Lead | {Sessions.GetAdInteractionStr(Attribution.GetAttribution(transactionList))} | {Sessions.GetPathReferrer(transactionList)}]");
+                $"[Lead | {Sessions.GetAdInteractionStr(Sessions.GetFirsLogPoint(transactionList))} | {Sessions.GetPathReferrer(transactionList)}]");
 
             Console.WriteLine();
         }
