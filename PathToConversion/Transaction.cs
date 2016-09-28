@@ -14,9 +14,6 @@ namespace PathToConversion
         public string ID_LogPoints { get; set; }
         public string LogPointName { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
+        // Add equals ovveride
     }
 }
