@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PathToConversion
 {
-    class Sessions
+    internal class Sessions
     {
         public static List<string> SearchEngines = new List<string> {
             "google",
@@ -17,29 +17,19 @@ namespace PathToConversion
             "twiter",
             "alfa" };
 
-        public static List<string> ReferringSites = new List<string> { "orai.lt" };
-
         public static readonly TimeSpan RecentAdInteractionSpan = TimeSpan.FromSeconds(30);
 
         public static string GetPathReferrer(List<Transactions> path)
         {
-            if (
-                path.Any(
-                    a =>
-                        a.TransactionType == TransactionValues.Impression ||
-                        a.TransactionType == TransactionValues.Click))
-                return "Campaign";
-            return GetReferrerType(GetFirsLogPoint(path));
+            return path.Any(
+                a =>
+                    a.TransactionType == TransactionValues.Impression ||
+                    a.TransactionType == TransactionValues.Click) ? "Campaign" : GetReferrerType(GetFirsLogPoint(path));
         }
 
         public static Transactions GetFirsLogPoint(List<Transactions> path)
         {
-            foreach (var trans in path)
-            {
-                if (trans.TransactionType == TransactionValues.TrackingPoint)
-                    return trans;
-            }
-            return null;
+            return path.FirstOrDefault(trans => trans.TransactionType == TransactionValues.TrackingPoint);
         }
 
         private static string GetReferrerType(Transactions trans)
@@ -74,7 +64,6 @@ namespace PathToConversion
         public static string GetAggregatedPath(List<Transactions> path)
         {
             var fullPath = AggregateMedia(path);
-
             return string.Join(" -> ", fullPath); // → no unicode in console ;(
         }
 
@@ -94,14 +83,10 @@ namespace PathToConversion
                     mediaCount++;
                     continue;
                 }
-                if (mediaCount > 1)
-                    result.Add($"[{lastMedia} x{mediaCount}]");
-                else
-                    result.Add($"[{lastMedia}]");
+                result.Add(mediaCount > 1 ? $"[{lastMedia} x{mediaCount}]" : $"[{lastMedia}]");
                 lastMedia = newMedia;
                 mediaCount = 1;
             }
-
             return result;
         }
     }
