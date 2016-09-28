@@ -13,54 +13,51 @@ namespace PathToConversion
         public static void GetSuccessfulTransaction(List<Transactions> transactionList)
         {
             var idLogPointsTemp = "null";
-            foreach (var successTransaction in transactionList)
+            foreach (var transaction in transactionList)
             {
-                idLogPointsTemp = !IsNullOrEmpty(successTransaction.ID_LogPoints) ? successTransaction.ID_LogPoints : idLogPointsTemp;
+                idLogPointsTemp = !IsNullOrEmpty(transaction.ID_LogPoints) ? transaction.ID_LogPoints : idLogPointsTemp;
                 if (!TransactionValues.ClientThankYouLogPoint.Contains(idLogPointsTemp)) continue;
                 idLogPointsTemp = "null";
-                CreateTransactionPath(successTransaction.CookieId, transactionList.Where(r => r.CookieId == successTransaction.CookieId).ToList());
+                CreateTransactionPath(transaction.CookieId, transactionList.Where(r => r.CookieId == transaction.CookieId).ToList());
             }
         }
 
         public static void CreateTransactionPath(int successCookie, List<Transactions> transactionList)
         {
-
             var printTransactions = new ConsoleTable("Logtime", "TransactionType", "Campaign", "Media", "Banner", "ID_LogPoints", "URLfrom");
 
             var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
-            foreach (var transactions in orderedTransactions)
+            foreach (var transaction in orderedTransactions)
             {
-                if (!successCookie.Equals(transactions.CookieId)) continue;
+                if (!successCookie.Equals(transaction.CookieId)) continue;
 
-                var attribute = !IsNullOrEmpty(transactions.Campaign) ? transactions : Attribution.GetAtribution(transactionList);
+                var attribute = transaction.TransactionType != TransactionValues.TrackingPoint ? transaction : Attribution.GetAttribution(transactionList);
 
                 if (attribute != null)
-                    printTransactions.AddRow(transactions.LogTime, transactions.TransactionType, attribute.Campaign,
-                        attribute.Media, attribute.Banner, transactions.ID_LogPoints, transactions.URLfrom);
+                    printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign, attribute.Media, attribute.Banner, transaction.ID_LogPoints, transaction.URLfrom);
                 else
-                    printTransactions.AddRow(transactions.LogTime, transactions.TransactionType, "null", "null", "null", transactions.ID_LogPoints, transactions.URLfrom);
+                    printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, Empty, Empty, Empty, transaction.ID_LogPoints, transaction.URLfrom);
 
-                if (!TransactionValues.ClientThankYouLogPoint.Contains(transactions.ID_LogPoints)) continue;
+                if (!TransactionValues.ClientThankYouLogPoint.Contains(transaction.ID_LogPoints)) continue;
                 Console.ForegroundColor = Green;
                 Console.WriteLine("******************************************************************************************************************************************");
-                
-                PathPrinter(successCookie, orderedTransactions);
+
+                TransactionSessionPrinter(successCookie, orderedTransactions);
                 break;
             }
-            Console.ForegroundColor = White;
+            Console.ForegroundColor = Cyan;
             printTransactions.Write();
-            
         }
-        public static void PathPrinter(int cookieId, List<Transactions> transactionList)
+
+        public static void TransactionSessionPrinter(int cookieId, List<Transactions> transactionList)
         {
             Console.WriteLine($"Completed conversion from cookieUser {cookieId}.");
-            
+
             Console.WriteLine(Sessions.GetAggregatedPath(transactionList) + " -> " +
-                $"[Lead | {Sessions.GetAdInteractionStr(Attribution.GetAtribution(transactionList))} | {Sessions.GetPathReferrer(transactionList)}]");
+                $"[Lead | {Sessions.GetAdInteractionStr(Attribution.GetAttribution(transactionList))} | {Sessions.GetPathReferrer(transactionList)}]");
 
             Console.WriteLine();
         }
-
     }
 
     public class TransactionValues
