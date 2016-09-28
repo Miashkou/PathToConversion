@@ -6,13 +6,13 @@ namespace PathToConversion
 {
     internal class Attribution
     {
-        public static Transactions GetAtribution(List<Transactions> listWithTransaction)
+        public static Transactions GetAttribution(List<Transactions> listWithTransaction)
         {
-        var today = Sessions.GetFirsLogPoint(listWithTransaction).LogTime;
-        var sevenDaysEarlier = today.AddDays(-7);
-        var twentyEightDaysEarlier = today.AddDays(-28);
+            var today = Sessions.GetFirsLogPoint(listWithTransaction).LogTime;
+            var sevenDaysEarlier = today.AddDays(-7);
+            var twentyEightDaysEarlier = today.AddDays(-28);
 
-        var orderedTransactions = listWithTransaction.OrderByDescending(r => r.LogTime).ToList();
+            var orderedTransactions = listWithTransaction.OrderByDescending(r => r.LogTime).ToList();
             Transactions lastImpression = null;
             foreach (var transaction in orderedTransactions)
             {

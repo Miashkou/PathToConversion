@@ -13,12 +13,12 @@ namespace PathToConversion
         public static void GetSuccessfulTransaction(List<Transactions> transactionList)
         {
             var idLogPointsTemp = "null";
-            foreach (var successTransaction in transactionList)
+            foreach (var transaction in transactionList)
             {
-                idLogPointsTemp = !IsNullOrEmpty(successTransaction.ID_LogPoints) ? successTransaction.ID_LogPoints : idLogPointsTemp;
+                idLogPointsTemp = !IsNullOrEmpty(transaction.ID_LogPoints) ? transaction.ID_LogPoints : idLogPointsTemp;
                 if (!TransactionValues.ClientThankYouLogPoint.Contains(idLogPointsTemp)) continue;
                 idLogPointsTemp = "null";
-                CreateTransactionPath(successTransaction.CookieId, transactionList.Where(r => r.CookieId == successTransaction.CookieId).ToList());
+                CreateTransactionPath(transaction.CookieId, transactionList.Where(r => r.CookieId == transaction.CookieId).ToList());
             }
         }
 
@@ -30,7 +30,8 @@ namespace PathToConversion
             foreach (var transaction in orderedTransactions)
             {
                 if (!successCookie.Equals(transaction.CookieId)) continue;
-                var attribute = !IsNullOrEmpty(transaction.Campaign) || !IsNullOrEmpty(transaction.Media) || !IsNullOrEmpty(transaction.Banner) ? transaction : Attribution.GetAtribution(transactionList);
+
+                var attribute = transaction.TransactionType != TransactionValues.TrackingPoint ? transaction : Attribution.GetAttribution(transactionList);
 
                 if (attribute != null)
                     printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign, attribute.Media, attribute.Banner, transaction.ID_LogPoints, transaction.URLfrom);
@@ -44,7 +45,7 @@ namespace PathToConversion
                 TransactionSessionPrinter(successCookie, orderedTransactions);
                 break;
             }
-            Console.ForegroundColor = White;
+            Console.ForegroundColor = Cyan;
             printTransactions.Write();
         }
 
@@ -53,7 +54,7 @@ namespace PathToConversion
             Console.WriteLine($"Completed conversion from cookieUser {cookieId}.");
 
             Console.WriteLine(Sessions.GetAggregatedPath(transactionList) + " -> " +
-                $"[Lead | {Sessions.GetAdInteractionStr(Attribution.GetAtribution(transactionList))} | {Sessions.GetPathReferrer(transactionList)}]");
+                $"[Lead | {Sessions.GetAdInteractionStr(Attribution.GetAttribution(transactionList))} | {Sessions.GetPathReferrer(transactionList)}]");
 
             Console.WriteLine();
         }
