@@ -11,39 +11,45 @@ namespace PathToConversion
     {
         public static void GetSuccessfulTransaction(List<Transaction> transactionList)
         {
+            //  var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
             var idLogPointsTemp = "null";
             foreach (var transaction in transactionList)
             {
                 idLogPointsTemp = !IsNullOrEmpty(transaction.ID_LogPoints) ? transaction.ID_LogPoints : idLogPointsTemp;
                 if (!TransactionValues.ClientThankYouLogPoint.Contains(idLogPointsTemp)) continue;
                 idLogPointsTemp = "null";
-                CreateTransactionPath(transaction.CookieId, transactionList.Where(r => r.CookieId == transaction.CookieId).ToList());
+                CreateTransactionPath(transaction.CookieId, transactionList.Where(r => r.CookieId == transaction.CookieId).ToList(), transaction.LogTime);
             }
         }
 
-        public static void CreateTransactionPath(int successCookieId, List<Transaction> transactionList)
+        public static void CreateTransactionPath(int successCookieId, List<Transaction> transactionList, DateTime logtimer)
         {
             var printTransactions = new ConsoleTable("Logtime", "TransactionType", "Campaign", "Media", "Banner", "ID_LogPoints", "URLfrom");
-
             var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
             foreach (var transaction in orderedTransactions)
             {
-                if (!successCookieId.Equals(transaction.CookieId)) continue;
-
-                var attribute = transaction.TransactionType != TransactionValues.TrackingPoint ? transaction : Attribution.GetAttribution(transactionList, transaction);
+                //TODO atrinkt iki kurio successLogTime spausdinti...
+                //while (!logtimer.Equals(transaction.LogTime))
+                //{
+                    var attribute = transaction.TransactionType != TransactionValues.TrackingPoint ? transaction : Attribution.GetAttribution(transactionList, transaction);
 
                 if (attribute != null)
-                    printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign, attribute.Media, attribute.Banner, transaction.ID_LogPoints, transaction.URLfrom);
+                    printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign,
+                        attribute.Media, attribute.Banner, transaction.ID_LogPoints, transaction.URLfrom);
                 else
-                    printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, Empty, Empty, Empty, transaction.ID_LogPoints, transaction.URLfrom);
+                    printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, Empty, Empty, Empty,
+                        transaction.ID_LogPoints, transaction.URLfrom);
+                //}
+                
 
-                if (!TransactionValues.ClientThankYouLogPoint.Contains(transaction.ID_LogPoints)) continue;
-                Console.ForegroundColor = Green;
-                Console.WriteLine("******************************************************************************************************************************************");
 
-                TransactionSessionPrinter(successCookieId, orderedTransactions);
-                break;
             }
+            Console.ForegroundColor = Green;
+            Console.WriteLine("******************************************************************************************************************************************");
+
+            TransactionSessionPrinter(successCookieId, orderedTransactions);
+
+
             Console.ForegroundColor = Cyan;
             printTransactions.Write();
         }

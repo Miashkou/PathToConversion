@@ -153,7 +153,7 @@
 	"TransactionType": 2,
 	"CookieID": "254257132",
 	"CookiesEnabled": 1,
-	"Campaign": "Autumn Campaign",
+	"Campaign": "Winter Campaign",
 	"Media": "senukai.lt",
 	"Banner": "Standard banner",
 	"TrackingSetup": "Coca-Cola - Tracking",
