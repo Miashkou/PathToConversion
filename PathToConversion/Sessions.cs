@@ -19,6 +19,8 @@ namespace PathToConversion
 
         public static readonly TimeSpan RecentAdInteractionSpan = TimeSpan.FromSeconds(30);
 
+        public static readonly TimeSpan SessionTimeoutSpan = TimeSpan.FromMinutes(30);
+
         public static string GetPathReferrer(List<Transaction> path)
         {
             if (path.Any(
@@ -31,7 +33,20 @@ namespace PathToConversion
         // Change to get last session first log point
         public static Transaction GetFirsLogPoint(List<Transaction> path)
         {
-            return path.FirstOrDefault(trans => trans.TransactionType == TransactionValues.TrackingPoint);
+            var firstLeadInChain = path.Last();
+            foreach (var trans in Enumerable.Reverse(path))
+            {
+                if (trans.TransactionType == TransactionValues.TrackingPoint)
+                {
+                    if (firstLeadInChain.LogTime - trans.LogTime < SessionTimeoutSpan)
+                        firstLeadInChain = trans;
+                    else return firstLeadInChain;
+                }
+            }
+            return firstLeadInChain;
+
+
+            //return path.FirstOrDefault(trans => trans.TransactionType == TransactionValues.TrackingPoint);
         }
 
         private static string GetReferrerType(Transaction trans)
