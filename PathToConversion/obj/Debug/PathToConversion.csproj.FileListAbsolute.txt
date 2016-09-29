@@ -45,3 +45,9 @@ C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debu
 C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debug\ConsoleTables.Core.dll
 C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debug\Newtonsoft.Json.dll
 C:\Users\WIN8\Desktop\Projects\PathToConversionAcademy\PathToConversion\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\bin\Debug\PathToConversion.exe
+C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\bin\Debug\PathToConversion.pdb
+C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\bin\Debug\ConsoleTables.Core.dll
+C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Edvard\OneDrive\AcademyPathToConversion\PathToConversion\obj\Debug\PathToConversion.csprojResolveAssemblyReference.cache

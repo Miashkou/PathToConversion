@@ -50,8 +50,8 @@ namespace PathToConversion
         {
             Console.WriteLine($"Completed conversion from cookieUser {cookieId}.");
 
-            Console.WriteLine(Sessions.GetAggregatedPath(transactionList) + " -> " +
-                $"[Lead | {Sessions.GetAdInteractionStr(Sessions.GetFirsLogPoint(transactionList))} | {Sessions.GetPathReferrer(transactionList)}]");
+            Console.WriteLine(string.Join(" -> ", Sessions.GetLastSessionFirstPoint(transactionList), 
+                $"[Lead | {Sessions.GetAdInteractionStr(transactionList)} | {Sessions.GetPathReferrer(transactionList)}]"));
 
             Console.WriteLine();
         }
@@ -59,11 +59,11 @@ namespace PathToConversion
 
     public class TransactionValues
     {
-        public static int Impression { get; } = 1;
-        public static int Click { get; } = 2;
-        public static int Event { get; } = 21;
-        public static int Unload { get; } = 4;
-        public static int TrackingPoint { get; } = 100;
+        public static readonly int Impression = 1;
+        public static readonly int Click = 2;
+        public static readonly int Event = 21;
+        public static readonly int Unload = 4;
+        public static readonly int TrackingPoint = 100;
 
         public static List<string> ClientThankYouLogPoint = new List<string>
         {

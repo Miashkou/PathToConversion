@@ -30,23 +30,19 @@ namespace PathToConversion
             return GetReferrerType(GetFirsLogPoint(path));
         }
 
-        // Change to get last session first log point
         public static Transaction GetFirsLogPoint(List<Transaction> path)
         {
+            // Assume last is always the lead
             var firstLeadInChain = path.Last();
             foreach (var trans in Enumerable.Reverse(path))
             {
-                if (trans.TransactionType == TransactionValues.TrackingPoint)
-                {
-                    if (firstLeadInChain.LogTime - trans.LogTime < SessionTimeoutSpan)
-                        firstLeadInChain = trans;
-                    else return firstLeadInChain;
-                }
+                if (trans.TransactionType != TransactionValues.TrackingPoint) continue;
+
+                if (firstLeadInChain.LogTime - trans.LogTime < SessionTimeoutSpan)
+                    firstLeadInChain = trans;
+                else return firstLeadInChain;
             }
             return firstLeadInChain;
-
-
-            //return path.FirstOrDefault(trans => trans.TransactionType == TransactionValues.TrackingPoint);
         }
 
         private static string GetReferrerType(Transaction trans)
@@ -64,9 +60,13 @@ namespace PathToConversion
             return path.Any(a => logPointTime - a.LogTime < RecentAdInteractionSpan);
         }
 
-        // Change this to use session attribution
-        public static string GetAdInteractionStr(Transaction attributedToTrans)
+        public static string GetAdInteractionStr(List<Transaction> transactions, Transaction forTransaction = null)
         {
+            if (forTransaction == null)
+                forTransaction = transactions.Last();
+
+            var attributedToTrans = Attribution.GetAttribution(transactions, forTransaction);
+
             if (attributedToTrans == null) return "Non-Campaign";
             switch (attributedToTrans.TransactionType)
             {
@@ -79,16 +79,15 @@ namespace PathToConversion
             }
         }
 
-        public static string GetAggregatedPath(List<Transaction> path)
+        public static string GetLastSessionFirstPoint(List<Transaction> path)
         {
             var fullPath = AggregateMedia(path);
             return string.Join(" -> ", fullPath); // → no unicode in console ;(
         }
 
-        // Fix two leads paths
         private static List<string> AggregateMedia(List<Transaction> path)
         {
-            if (path.Count == 1) return new List<string> { path[0].Media };
+            //if (path.Count == 1) return new List<string> { path[0].Media };
 
             var result = new List<string>();
 
@@ -96,16 +95,26 @@ namespace PathToConversion
             var mediaCount = 1;
             foreach (var trans in path.Skip(1))
             {
+                if (trans.TransactionType == TransactionValues.TrackingPoint || trans.Media == null)
+                    continue;
+                
                 var newMedia = trans.Media;
+
                 if (newMedia == lastMedia)
                 {
                     mediaCount++;
-                    continue;
                 }
-                result.Add(mediaCount > 1 ? $"[{lastMedia} x{mediaCount}]" : $"[{lastMedia}]");
-                lastMedia = newMedia;
-                mediaCount = 1;
+                else
+                {
+                    result.Add(mediaCount > 1 ? $"[{lastMedia} x{mediaCount}]" : $"[{lastMedia}]");
+                    lastMedia = newMedia;
+                    mediaCount = 1;
+                }
             }
+
+            if (lastMedia != null)
+                result.Add(mediaCount > 1 ? $"[{lastMedia} x{mediaCount}]" : $"[{lastMedia}]");
+
             return result;
         }
     }
