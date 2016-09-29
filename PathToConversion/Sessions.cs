@@ -87,15 +87,13 @@ namespace PathToConversion
 
         private static List<string> AggregateMedia(List<Transaction> path)
         {
-            //if (path.Count == 1) return new List<string> { path[0].Media };
-
             var result = new List<string>();
 
-            var lastMedia = path[0].Media;
+            string lastMedia = null;
             var mediaCount = 1;
-            foreach (var trans in path.Skip(1))
+            foreach (var trans in path)
             {
-                if (trans.TransactionType == TransactionValues.TrackingPoint || trans.Media == null)
+                if (trans.TransactionType == TransactionValues.TrackingPoint)
                     continue;
                 
                 var newMedia = trans.Media;
@@ -106,7 +104,8 @@ namespace PathToConversion
                 }
                 else
                 {
-                    result.Add(mediaCount > 1 ? $"[{lastMedia} x{mediaCount}]" : $"[{lastMedia}]");
+                    if (lastMedia != null)
+                        result.Add(mediaCount > 1 ? $"[{lastMedia} x{mediaCount}]" : $"[{lastMedia}]");
                     lastMedia = newMedia;
                     mediaCount = 1;
                 }
