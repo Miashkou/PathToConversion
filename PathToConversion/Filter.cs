@@ -18,25 +18,31 @@ namespace PathToConversion
                 CreateTransactionPath(transaction.CookieId, transactionList.Where(r => r.CookieId == transaction.CookieId).ToList(), transaction.LogTime);
             }
         }
-      
+
         public static void CreateTransactionPath(int successCookieId, List<Transaction> transactionList, DateTime timer)
         {
             var printTransactions = new ConsoleTable("Logtime", "TransactionType", "Campaign", "Media", "Banner", "ID_LogPoints", "URLfrom");
             var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
-            foreach (var transaction in orderedTransactions)
-            {
-                if (transaction.LogTime > timer) continue;
-                var attribute = transaction.TransactionType != TransactionValues.TrackingPoint
-                    ? transaction
-                    : Attribution.GetAttribution(transactionList, transaction);
 
-                if (attribute != null)
-                    printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign,
-                        attribute.Media, attribute.Banner, transaction.ID_LogPoints, transaction.URLfrom);
-                else
-                    printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, Empty, Empty, Empty,
-                        transaction.ID_LogPoints, transaction.URLfrom);
+            var clientSiteList = orderedTransactions.Select(transaction => transaction.ClientSite).Distinct().ToList();
+            foreach (var client in clientSiteList)
+            {
+                foreach (var transaction in orderedTransactions.Where(r => r.ClientSite == client))
+                {
+                    if (transaction.LogTime > timer) continue;
+                    var attribute = transaction.TransactionType != TransactionValues.TrackingPoint
+                        ? transaction
+                        : Attribution.GetAttribution(transactionList, transaction);
+
+                    if (attribute != null)
+                        printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign,
+                            attribute.Media, attribute.Banner, transaction.ID_LogPoints, transaction.URLfrom);
+                    else
+                        printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, Empty, Empty, Empty,
+                            transaction.ID_LogPoints, transaction.URLfrom);
+                }
             }
+
 
             TransactionSessionPrinter(successCookieId, orderedTransactions);
             Console.ForegroundColor = Cyan;
