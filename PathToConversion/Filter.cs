@@ -7,30 +7,28 @@ using static System.String;
 
 namespace PathToConversion
 {
-    public static class Filter
+    public class Filter
     {
         public static void GetSuccessfulTransaction(List<Transaction> transactionList)
         {
             var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
             foreach (var transaction in orderedTransactions)
             {
-                if (!TransactionValues.ClientThankYouLogPoint.Contains(transaction.ID_LogPoints)) continue;
-                foreach (var successfulTransaction in orderedTransactions)
-                {
-                    if (!transaction.LogTime.Equals(successfulTransaction.LogTime) ||
-                        !transaction.CookieId.Equals(successfulTransaction.CookieId)) continue;
-                    CreateTransactionPath(transaction.CookieId, transactionList.Where(r => r.CookieId == transaction.CookieId).TakeWhile(r => r.LogTime <= successfulTransaction.LogTime).ToList());
-                }
+                if (!(TransactionValues.ClientThankYouLogPoint.Contains(transaction.ID_LogPoints) && TransactionValues.TrackingPoint == transaction.TransactionType)) continue;
+                CreateTransactionPath(transaction.CookieId, transactionList.Where(r => r.CookieId == transaction.CookieId).ToList(), transaction.LogTime);
             }
         }
-
-        public static void CreateTransactionPath(int successCookieId, List<Transaction> transactionList)
+      
+        public static void CreateTransactionPath(int successCookieId, List<Transaction> transactionList, DateTime timer)
         {
             var printTransactions = new ConsoleTable("Logtime", "TransactionType", "Campaign", "Media", "Banner", "ID_LogPoints", "URLfrom");
             var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
             foreach (var transaction in orderedTransactions)
             {
-                var attribute = transaction.TransactionType != TransactionValues.TrackingPoint ? transaction : Attribution.GetAttribution(transactionList, transaction);
+                if (transaction.LogTime > timer) continue;
+                var attribute = transaction.TransactionType != TransactionValues.TrackingPoint
+                    ? transaction
+                    : Attribution.GetAttribution(transactionList, transaction);
 
                 if (attribute != null)
                     printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign,
@@ -39,8 +37,7 @@ namespace PathToConversion
                     printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, Empty, Empty, Empty,
                         transaction.ID_LogPoints, transaction.URLfrom);
             }
-            Console.ForegroundColor = Green;
-            Console.WriteLine("******************************************************************************************************************************************");
+
             TransactionSessionPrinter(successCookieId, orderedTransactions);
             Console.ForegroundColor = Cyan;
             printTransactions.Write();
@@ -48,9 +45,11 @@ namespace PathToConversion
 
         public static void TransactionSessionPrinter(int cookieId, List<Transaction> transactionList)
         {
+            Console.ForegroundColor = Green;
+            Console.WriteLine("******************************************************************************************************************************************");
             Console.WriteLine($"Completed conversion from cookieUser {cookieId}.");
 
-            Console.WriteLine(string.Join(" -> ", Sessions.GetLastSessionFirstPoint(transactionList), 
+            Console.WriteLine(string.Join(" -> ", Sessions.GetLastSessionFirstPoint(transactionList),
                 $"[Lead | {Sessions.GetAdInteractionStr(transactionList)} | {Sessions.GetPathReferrer(transactionList)}]"));
 
             Console.WriteLine();
