@@ -13,5 +13,6 @@ namespace PathToConversion
         public string URLfrom { get; set; }
         public string ID_LogPoints { get; set; }
         public string LogPointName { get; set; }
+        public string ClientSite { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace PathToConversion
     {
         public static void Main()
         { 
-            Filter.GetSuccessfulTransaction(DataReader.GetFileInformation("testBug"));
+            Filter.GetSuccessfulTransaction(DataReader.GetFileInformation("testClient"));
             Console.Read();
         }
     }
