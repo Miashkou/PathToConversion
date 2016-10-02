@@ -27,14 +27,14 @@ namespace PathToConversion
         {
             var printTransactions = new ConsoleTable("Logtime", "TransactionType", "Campaign", "Media", "Banner", "ID_LogPoints", "URLfrom");
             var orderedTransactions = transactionList.Where(r => r.ClientSite == client).OrderBy(r => r.LogTime).ToList();
-
+            var transactionsByLogTime = new List<Transaction>();
             foreach (var transaction in orderedTransactions)
             {
                 if (transaction.LogTime > timer) continue;
                 var attribute = transaction.TransactionType != TransactionValues.TrackingPoint
                     ? transaction
                     : Attribution.GetAttribution(transactionList, transaction);
-
+                transactionsByLogTime.Add(transaction);
                 if (attribute != null)
                     printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign,
                         attribute.Media, attribute.Banner, transaction.ID_LogPoints, transaction.URLfrom);
@@ -42,8 +42,7 @@ namespace PathToConversion
                     printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, Empty, Empty, Empty,
                         transaction.ID_LogPoints, transaction.URLfrom);
             }
-
-            TransactionSessionPrinter(successCookieId, orderedTransactions);
+            TransactionSessionPrinter(successCookieId, transactionsByLogTime);
             Console.ForegroundColor = Cyan;
             printTransactions.Write();
         }
@@ -54,7 +53,7 @@ namespace PathToConversion
             Console.WriteLine("******************************************************************************************************************************************");
             Console.WriteLine($"Completed conversion from cookieUser {cookieId}.");
 
-            Console.WriteLine(string.Join(" -> ", Sessions.GetLastSessionFirstPoint(transactionList),
+            Console.WriteLine(Join(" -> ", Sessions.GetLastSessionFirstPoint(transactionList),
                 $"[Lead | {Sessions.GetAdInteractionStr(transactionList)} | {Sessions.GetPathReferrer(transactionList)}]"));
 
             Console.WriteLine();
