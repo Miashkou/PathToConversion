@@ -18,7 +18,7 @@ namespace PathToConversion
             //9)testClient
             //10)transactions
             //11)bigdata
-            Filter.GetSuccessfulTransaction(DataReader.GetFileInformation("bigdata"));
+            Filter.GetSuccessfulTransaction(DataReader.GetFileInformation("transactions"));
             Console.Read();
         }
     }
