@@ -33,7 +33,8 @@ namespace PathToConversion
                 if (transaction.LogTime > timer) continue;
                 var attribute = transaction.TransactionType != TransactionValues.TrackingPoint
                     ? transaction
-                    : Attribution.GetAttribution(transactionList, transaction);
+                    : Attribution.GetAttribution(orderedTransactions, transaction, timer);
+               
                 transactionsByLogTime.Add(transaction);
                 if (attribute != null)
                     printTransactions.AddRow(transaction.LogTime, transaction.TransactionType, attribute.Campaign,

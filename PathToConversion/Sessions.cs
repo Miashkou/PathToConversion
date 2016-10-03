@@ -65,7 +65,7 @@ namespace PathToConversion
             if (forTransaction == null)
                 forTransaction = transactions.Last();
 
-            var attributedToTrans = Attribution.GetAttribution(transactions, forTransaction);
+            var attributedToTrans = Attribution.GetAttribution(transactions, forTransaction, DateTime.Now);
 
             if (attributedToTrans == null) return "Non-Campaign";
             switch (attributedToTrans.TransactionType)

@@ -6,34 +6,30 @@ namespace PathToConversion
 {
     internal class Attribution
     {
-        public static Transaction GetAttribution(List<Transaction> listWithTransaction, Transaction logPoint)
+        public static Transaction GetAttribution(List<Transaction> listWithTransaction, Transaction logPoint, DateTime logpoinTime)
         {
-            // Rename variables (today -> logpointTime)
-            // Use passed transaction LogTime instead
-            var logpointTime = logPoint.LogTime; //Sessions.GetFirsLogPoint(listWithTransaction).LogTime;
+            var logpointTime = logPoint.LogTime;
             var sevenDaysEarlier = logpointTime.AddDays(-7);
             var twentyEightDaysEarlier = logpointTime.AddDays(-28);
 
-            var orderedTransactions = listWithTransaction.OrderByDescending(r => r.LogTime).ToList();
-            // Get index of logPoint transaction
+            var orderedTransactions = listWithTransaction.TakeWhile(r => r.LogTime <= logpoinTime).OrderBy(r => r.LogTime).ToList();
+
             var indexOflogPoint = orderedTransactions.IndexOf(logPoint);
             Transaction lastImpression = null;
-            // Make a for loop from logPoint index to beginning
             for (int i = indexOflogPoint; i >= 0; i--)
             {
-                foreach (var transaction in orderedTransactions)
+                var transaction = orderedTransactions[i];
+
+                if (transaction.TransactionType.Equals(TransactionValues.Click) && (transaction.LogTime > twentyEightDaysEarlier))
                 {
-                    if (transaction.TransactionType.Equals(TransactionValues.Click))
-                    {
-                        if (transaction.LogTime > twentyEightDaysEarlier)
-                            return transaction;
-                    }
-                    else if (lastImpression == null)
-                    {
-                        if (transaction.TransactionType.Equals(TransactionValues.Impression) && transaction.LogTime > sevenDaysEarlier)
-                            lastImpression = transaction;
-                    }
+                    return transaction;
                 }
+                else if ((lastImpression == null) && transaction.TransactionType.Equals(TransactionValues.Impression) && transaction.LogTime > sevenDaysEarlier)
+                {
+
+                    lastImpression = transaction;
+                }
+
             }
 
             return lastImpression;
