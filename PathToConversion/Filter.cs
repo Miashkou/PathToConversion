@@ -12,25 +12,24 @@ namespace PathToConversion
         public static void GetSuccessfulTransaction(List<Transaction> transactionList)
         {
             var orderedTransactions = transactionList.OrderBy(r => r.LogTime).ToList();
-            foreach (var client in orderedTransactions.Select(transaction => transaction.ClientSite).Distinct().ToList())
+            foreach (var clientSite in orderedTransactions.Select(transaction => transaction.ClientSite).Distinct().ToList())
             {
-                foreach (var transaction in orderedTransactions.Where(r => r.ClientSite == client))
+                foreach (var transaction in orderedTransactions.Where(r => r.ClientSite == clientSite))
                 {
                     if (!(TransactionValues.ClientThankYouLogPoint.Contains(transaction.ID_LogPoints) && TransactionValues.TrackingPoint == transaction.TransactionType)) continue;
-                    CreateTransactionPath(transaction.CookieId, transactionList.Where(r => r.CookieId == transaction.CookieId).ToList(), transaction.LogTime, client);
+                    CreateTransactionPath(transaction.CookieId, transactionList.Where(r => r.CookieId == transaction.CookieId).ToList(), transaction.LogTime, clientSite);
                 }
             }
-
         }
 
-        public static void CreateTransactionPath(int successCookieId, List<Transaction> transactionList, DateTime timer, string client)
+        public static void CreateTransactionPath(int successCookieId, List<Transaction> transactionList, DateTime logPointTime, string clientSite)
         {
             var printTransactions = new ConsoleTable("Logtime", "TransactionType", "Campaign", "Media", "Banner", "ID_LogPoints", "URLfrom");
-            var orderedTransactions = transactionList.Where(r => r.ClientSite == client).OrderBy(r => r.LogTime).ToList();
+            var orderedTransactions = transactionList.Where(r => r.ClientSite == clientSite).OrderBy(r => r.LogTime).ToList();
             var transactionsByLogTime = new List<Transaction>();
             foreach (var transaction in orderedTransactions)
             {
-                if (transaction.LogTime > timer) continue;
+                if (transaction.LogTime > logPointTime) continue;
                 var attribute = transaction.TransactionType != TransactionValues.TrackingPoint
                     ? transaction
                     : Attribution.GetAttribution(orderedTransactions, transaction, timer);
