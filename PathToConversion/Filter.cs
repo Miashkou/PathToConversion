@@ -32,7 +32,7 @@ namespace PathToConversion
                 if (transaction.LogTime > logPointTime) continue;
                 var attribute = transaction.TransactionType != TransactionValues.TrackingPoint
                     ? transaction
-                    : Attribution.GetAttribution(orderedTransactions, transaction, timer);
+                    : Attribution.GetAttribution(orderedTransactions, transaction, logPointTime);
                
                 transactionsByLogTime.Add(transaction);
                 if (attribute != null)
@@ -58,6 +58,7 @@ namespace PathToConversion
 
             Console.WriteLine();
         }
+       
     }
 
     public class TransactionValues
